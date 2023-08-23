@@ -1,5 +1,9 @@
 # Supplementary material for "Manipulating Embeddings of Stable Diffusion Prompts"
 
+## Missing data files
+
+Additional data (`./output` and `./user_study`) can be found in the [supplementary material file on Zenodo](https://doi.org/10.5281/zenodo.8274626).
+
 ## Deployment 
 - **Docker Configuration:** Refer to the Dockerfile at `./deployment/Dockerfile`.
 - **Python Dependencies:** All required Python packages are mentioned in `./deployment/requirements.txt`.
