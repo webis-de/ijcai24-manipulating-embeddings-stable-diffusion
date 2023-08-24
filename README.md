@@ -1,4 +1,19 @@
-# Supplementary material for "Manipulating Embeddings of Stable Diffusion Prompts"
+# Code for "Manipulating Embeddings of Stable Diffusion Prompts"
+
+The paper can be found on arXiv: [arXiv:2308.12059](https://arxiv.org/abs/2308.12059)
+
+Please cite this code and the paper as:
+```
+@Article{deckers:2023b,
+  author =                   {Niklas Deckers and Julia Peters and Martin Potthast},
+  title =                    {Manipulating Embeddings of Stable Diffusion Prompts},
+  journal =                  {CoRR},
+  volume =                   {abs/2308.12059},
+  url =                      {https://arxiv.org/abs/2308.12059},
+  month =                    aug,
+  year =                     2023
+}
+```
 
 ## Missing data files
 
