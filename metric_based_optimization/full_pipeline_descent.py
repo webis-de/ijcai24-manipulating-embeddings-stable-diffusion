@@ -204,4 +204,5 @@ if __name__ == '__main__':
     #increase_sharpness()
     #increase_blurriness()
     increase_aesthetic_score()
+    # Please increase number of iterations from 7 to, e.g., 400 to get reasonable results.
 
