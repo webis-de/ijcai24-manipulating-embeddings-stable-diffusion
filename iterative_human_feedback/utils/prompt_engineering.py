@@ -49,11 +49,9 @@ def set_img_directory(prompt):
 def generate_image(curr_prompt):
     embedding = ldm.get_embedding([curr_prompt])[0]
     current_image = ldm.embedding_2_img(
-        '',
         embedding,
         seed=global_seed,
         return_pil=True,
-        save_img=False,
         keep_init_latents=False
     )
     current_image.save(os.path.join(img_dir, f'{no_of_images}.jpg'))

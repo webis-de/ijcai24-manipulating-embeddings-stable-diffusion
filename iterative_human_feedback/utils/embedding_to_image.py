@@ -43,8 +43,7 @@ def cond2img(input_file, output_dir):
         os.makedirs(output_dir)
 
     for seed in seeds:
-        pil_img = ldm.embedding_2_img('', embedding, seed=seed, return_pil=True, keep_init_latents=False,
-                                      save_img=False)
+        pil_img = ldm.embedding_2_img(embedding, seed=seed, return_pil=True, keep_init_latents=False)
 
         filename = f'{os.path.basename(input_file).split("_")[0]}_{seed}.jpg'
         pil_img.save(os.path.join(output_dir, filename))
