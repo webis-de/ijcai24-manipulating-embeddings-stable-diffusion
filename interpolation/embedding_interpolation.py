@@ -32,7 +32,7 @@ if __name__ == '__main__':
     for i in range(51):
         alpha = (i+1) * 0.02
 
-        interpolated_cond = ldm.lerp(condition1[:, 1:, :], condition2[:, 1:, :], alpha)
+        interpolated_cond = ldm.slerp(condition1[:, 1:, :], condition2[:, 1:, :], alpha)
         cond = torch.cat((cond_row.unsqueeze(dim=1), interpolated_cond), dim=1)
         emb = torch.cat([uncond, cond])
 
