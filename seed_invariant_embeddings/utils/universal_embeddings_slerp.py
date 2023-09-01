@@ -63,7 +63,7 @@ class GradientDescent(torch.nn.Module):
 
     def forward(self):
         ldm.embedding_2_img(ldm.get_embedding([prompt])[0], dim=dim, seed=seed, return_latents=True,
-                            keep_init_latents=False)
+                            keep_init_latents=False, return_latents_step=0)
 
         ldm.initial_latents = ldm.slerp(self.target_init_latents, ldm.initial_latents, self.val)
 
@@ -71,7 +71,7 @@ class GradientDescent(torch.nn.Module):
 
         latents = ldm.embedding_2_img(self.get_text_embedding(),  dim=dim,
                                       return_pil=False,
-                                      return_latents=True, keep_init_latents=True)
+                                      return_latents=True, keep_init_latents=True, return_latents_step=0)
 
         score = compute_dist_metric(self.target_latents, latents)
 
@@ -91,7 +91,7 @@ if __name__ == '__main__':
         latents_list = list()
         target_latents = ldm.embedding_2_img(ldm.get_embedding([prompt])[0], dim=dim,
                                              seed=target_seed, return_pil=False,
-                                             return_latents=True, keep_init_latents=False)
+                                             return_latents=True, keep_init_latents=False, return_latents_step=0)
 
         target_init_latents = torch.clone(ldm.initial_latents)
 
@@ -129,15 +129,6 @@ if __name__ == '__main__':
             print('update initial latents')
             print(val)
             gd.val = val
-
-            #pil_img = ldm.embedding_2_img('', gd.get_text_embedding(), save_img=False,
-            #                                                            dim=dim, return_pil=True,
-            #                                                            return_latents=False,
-            #                              keep_init_latents=False,
-            #                              seed=seed)
-#
-            #pil_img.save(f'output/interpolation/{eta}/{dir_num}/A_{i}_{prompt[0:25]}_{round(score.item(), 3)}_{round(val, 2)}.jpg')
-#
 
         plot_scores(interpolation_value, f'output/universal_embeddings/interpolation/{eta}/interpolation_values.jpg',
                     x_label='Iterations',
