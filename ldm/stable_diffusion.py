@@ -134,7 +134,7 @@ class StableDiffusion:
 
         return latents
 
-    def embedding_2_img(self, emb, keep_init_latents=True, return_latents=False, return_latents_step = 69, return_pil=True, dim=512, g=7.5, seed=61582, steps=70):
+    def embedding_2_img(self, emb, keep_init_latents=True, return_latents=False, return_latents_step = 0, return_pil=True, dim=512, g=7.5, seed=61582, steps=70):
         """
         Diffusion process to convert input to image
         """
