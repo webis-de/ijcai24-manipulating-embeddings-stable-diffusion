@@ -75,7 +75,7 @@ To begin, download the aesthetic predictor model weights from the repository of 
 - **Output:** `./output/metric_optimization/LAION-Aesthetics V2/`
 
 ## Figure 9: Aesthetic Metrics across Different Seeds
-- **Execution:** Use `python3 ./metric_based_optimization/aesthetic_metric_generalization.py`
+- **Execution:** Use `python3 ./metric_based_optimization/utils/aesthetic_metric_generalization.py`
 - **Output:** `./output/metric_generalization/highly detailed photoreal eldritch biomechani/`
 
 ## Section 4.2: Advanced Iterative Human Feedback
