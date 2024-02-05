@@ -34,13 +34,7 @@ def compute_blurriness(image):
     # Compute the variance of the Laplacian filter response
     variance = torch.var(filtered_image)
 
-    return variance * 10
-
-
-def get_shifted_embedding(text_embedding, default_std, default_mean):
-    shifted_text_embedding = text_embedding / (torch.std(text_embedding)) * default_std
-    shifted_text_embedding = shifted_text_embedding - torch.mean(shifted_text_embedding) + default_mean
-    return shifted_text_embedding
+    return variance
 
 
 def preprocess(rgb):
@@ -83,7 +77,7 @@ class GradientDescent(torch.nn.Module):
         uncond = torch.cat((self.condition_row.unsqueeze(dim=1), self.uncondition), dim=1)
         return torch.cat([uncond, cond])
 
-    def forward(self, metric, seed=61582, g=7.5, steps=70):
+    def forward(self, metric, loss_scale, seed=61582, g=7.5, steps=70):
         self.latents = ldm.embedding_2_img(
             self.get_text_embedding(),
             dim=dim,
@@ -101,7 +95,7 @@ class GradientDescent(torch.nn.Module):
         else:
             score = compute_blurriness(image)
 
-        return score
+        return score * loss_scale
 
     def get_optimizer(self, eta):
             return AdamOnLion(
@@ -130,13 +124,17 @@ class GradientDescent(torch.nn.Module):
         return self.get_optimizer(eta)
 
 
-def get_image(seed, iterations, prompt, metric):
+def get_image(seed, iterations, prompt, metric, loss_scale = None):
     if metric == 'Sharpness' or metric == 'LAION-Aesthetics V2':
         optimized_score = -1000.0
         optimized_latents = None
+        if loss_scale is None:
+            loss_scale = 50
     else:
         optimized_score = 1000.0
         optimized_latents = None
+        if loss_scale is None:
+            loss_scale = 20
 
     gradient_descent = GradientDescent(ldm.text_enc([prompt]))
     optimizer = gradient_descent.get_optimizer(0.01)
@@ -146,7 +144,7 @@ def get_image(seed, iterations, prompt, metric):
 
     for i in range(int(iterations)):
         optimizer.zero_grad()
-        score = gradient_descent.forward(metric, seed=int(seed), steps=70)
+        score = gradient_descent.forward(metric, loss_scale, seed=int(seed), steps=70)
 
         score_list.append(score.item())
         torch.save(gradient_descent.get_text_embedding(), f'./output/metric_optimization/{metric}/{prompt[0:45].strip()}/embeddings/{i}_{prompt[0:45].strip()}.pt')
@@ -184,12 +182,12 @@ def get_image(seed, iterations, prompt, metric):
 
 def increase_blurriness():
     prompt = "a coffee cup filled with magma, digital art, highly detailed, sparks in the background, out of focus background"
-    get_image(61582, 7, prompt, "Blurriness")
+    get_image(61582, 7, prompt, "Blurriness", loss_scale = 10)
 
 
 def increase_sharpness():
     prompt = "a coffee cup filled with magma, digital art, highly detailed, sparks in the background, out of focus background"
-    get_image(61582, 7, prompt, "Sharpness")
+    get_image(61582, 7, prompt, "Sharpness", loss_scale = 10)
 
 
 def increase_aesthetic_score():
@@ -197,7 +195,7 @@ def increase_aesthetic_score():
         prompts = file.readlines()
         prompts = [line.strip() for line in prompts]  # Remove leading/trailing whitespace and newlines
     for prompt in prompts:
-        get_image(61582, 7, prompt, "LAION-Aesthetics V2")
+        get_image(61582, 7, prompt, "LAION-Aesthetics V2", loss_scale = 1)
 
 
 if __name__ == '__main__':
@@ -205,4 +203,5 @@ if __name__ == '__main__':
     #increase_blurriness()
     increase_aesthetic_score()
     # Please increase number of iterations from 7 (to, e.g., 400 for the aesthetic score or 50 for the blurriness and sharpness) to get reasonable results.
+    # You might also want to try increasing the loss_scale to get a more significant change in the images.
 
