@@ -17,7 +17,7 @@ Please cite this code and the paper as:
 
 ## Missing data files
 
-Additional data (`./output` and `./user_study`) can be found in the [supplementary material file on Zenodo](https://doi.org/10.5281/zenodo.8274626).
+Additional data (`./output` and `./user_study`) can be found in the [supplementary material file on Zenodo](https://doi.org/10.5281/zenodo.8274625).
 
 ## Deployment 
 - **Docker Configuration:** Refer to the Dockerfile at `./deployment/Dockerfile`.
