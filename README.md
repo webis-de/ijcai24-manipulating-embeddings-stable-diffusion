@@ -1,17 +1,20 @@
 # Code for "Manipulating Embeddings of Stable Diffusion Prompts"
 
-The paper can be found on arXiv: [arXiv:2308.12059](https://arxiv.org/abs/2308.12059)
+The paper can be found in the proceedings: [IJCAI 2024 Proceedings](https://www.ijcai.org/proceedings/2024/845)
 
 Please cite this code and the paper as:
 ```
-@Article{deckers:2023b,
+@InProceedings{deckers:2024a,
   author =                   {Niklas Deckers and Julia Peters and Martin Potthast},
-  title =                    {Manipulating Embeddings of Stable Diffusion Prompts},
-  journal =                  {CoRR},
-  volume =                   {abs/2308.12059},
-  url =                      {https://arxiv.org/abs/2308.12059},
+  booktitle =                {Proceedings of the Thirty-Third International Joint Conference on Artificial Intelligence, {IJCAI-24}},
+  doi =                      {10.24963/ijcai.2024/845},
+  editor =                   {Kate Larson},
   month =                    aug,
-  year =                     2023
+  pages =                    {7636--7644},
+  publisher =                {International Joint Conferences on Artificial Intelligence Organization},
+  title =                    {{Manipulating Embeddings of Stable Diffusion Prompts}},
+  url =                      {https://doi.org/10.24963/ijcai.2024/845},
+  year =                     2024
 }
 ```
 
